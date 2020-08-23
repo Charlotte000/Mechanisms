@@ -1,4 +1,4 @@
-if __name__ == 'classes.Comparator':
+if __name__ == 'classes.Repeater':
     import pygame
     from classes.Entity import Entity
     from classes.EntityGenerator import EntityGenerator
@@ -6,7 +6,7 @@ if __name__ == 'classes.Comparator':
     from classes.EntityConductor import EntityConductor
     from classes.EntityClickable import EntityClickable
 
-    class Comparator(Entity, EntityGenerator, EntityConsumer, EntityClickable):
+    class Repeater(Entity, EntityGenerator, EntityConsumer, EntityClickable):
         def __init__(self):
             self.active = False
             self.ignore = None
@@ -15,7 +15,7 @@ if __name__ == 'classes.Comparator':
             super().__init__()
 
         def draw(self, screen, _, x, y, size):
-            super().draw(screen, x, y, size, Comparator._get_color(self.delay))
+            super().draw(screen, x, y, size, Repeater._get_color(self.delay))
             if self.ignore:
                 pygame.draw.line( \
                     screen, \

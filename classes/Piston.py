@@ -44,39 +44,21 @@ if __name__ == 'classes.Piston':
         def _init_image(direction):
             img = pygame.Surface((Mesh.CELL_SIZE, Mesh.CELL_SIZE))
             img2 = pygame.Surface((Mesh.CELL_SIZE, Mesh.CELL_SIZE * 2))
-            img2.fill((50, 50, 50))
             pygame.draw.rect(img, (100, 100, 100), (0, 0, Mesh.CELL_SIZE, Mesh.CELL_SIZE))
-
-            half_size = Mesh.CELL_SIZE / 2
-            pygame.draw.line( \
-                img, \
-                (255, 50, 50), \
-                (half_size, Mesh.CELL_SIZE), \
-                (half_size, 0), \
-            )
-            pygame.draw.polygon( \
-                img, \
-                (255, 50, 50), \
-                [ \
-                    (half_size * .5, half_size), \
-                    (half_size, 0), \
-                    (half_size * 1.5, half_size)], \
-            )
+            
+            img2.set_colorkey((0, 0, 0))
             img2.blit(img, (0, Mesh.CELL_SIZE))
-            pygame.draw.polygon( \
+            pygame.draw.rect( \
                 img2, \
                 (77, 56, 0), \
                 ( \
-                    [0, 0], \
-                    [Mesh.CELL_SIZE, 0], \
-                    [Mesh.CELL_SIZE, Mesh.CELL_SIZE * .25], \
-                    [Mesh.CELL_SIZE * .6, Mesh.CELL_SIZE * .25], \
-                    [Mesh.CELL_SIZE * .6, Mesh.CELL_SIZE], \
-                    [Mesh.CELL_SIZE * .4, Mesh.CELL_SIZE], \
-                    [Mesh.CELL_SIZE * .4, Mesh.CELL_SIZE * .25], \
-                    [0, Mesh.CELL_SIZE * .25], \
+                    Mesh.CELL_SIZE * .4, Mesh.CELL_SIZE * .25, \
+                    Mesh.CELL_SIZE * .2, Mesh.CELL_SIZE * .75 \
                 ) \
             )
+
+            pygame.draw.rect(img, (177, 156, 10), (0, 0, Mesh.CELL_SIZE, Mesh.CELL_SIZE * .25))
+            pygame.draw.rect(img2, (177, 156, 10), (0, 0, Mesh.CELL_SIZE, Mesh.CELL_SIZE * .25))
             if direction == 0:
                 return img, img2
             if direction == 1:

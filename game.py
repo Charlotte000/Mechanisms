@@ -8,7 +8,7 @@ from classes.Redstone import Redstone
 from classes.RedstoneBlock import RedstoneBlock
 from classes.Button import Button
 from classes.Empty import Empty
-from classes.Comparator import Comparator
+from classes.Repeater import Repeater
 from classes.Lever import Lever
 
 
@@ -30,7 +30,7 @@ menu = pygame.Surface((Mesh.CELL_SIZE, window.get_height()))
 # Init meshes
 mesh = Mesh((500, 500))
 menu_mesh = Mesh(menu.get_size())
-for y, item in enumerate([Button(), Comparator(), Lever(), Piston(), Redstone(), RedstoneBlock(), Solid(), StickyPiston()]):
+for y, item in enumerate([Button(), Repeater(), Lever(), Piston(), StickyPiston(), Redstone(), RedstoneBlock(), Solid()]):
     menu_mesh.set_at(0, y, item)
 
 # Cursor
