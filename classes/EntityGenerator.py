@@ -1,8 +1,10 @@
 if __name__ == 'classes.EntityGenerator':
+    from classes.Mesh import Mesh
+
     class EntityGenerator:
         GENERATOR_RANGE = ([-1, 0], [1, 0], [0, -1], [0, 1])
 
-        def update_generator(self, mesh, x, y):
+        def update_generator(self, mesh: Mesh, x: int, y: int) -> None:
             for dx, dy in EntityGenerator.GENERATOR_RANGE:
                 if (item := mesh.get_at(x + dx, y + dy)) is not None:
                     if item.is_conductor():

@@ -1,5 +1,6 @@
 if __name__ == 'classes.Redstone':
     import pygame
+    
     from classes.Entity import Entity
     from classes.EntityConductor import EntityConductor
 

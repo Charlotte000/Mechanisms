@@ -1,5 +1,6 @@
 if __name__ == 'classes.EntityPushable':
     from classes.Empty import Empty
+    from classes.Mesh import Mesh
 
     class EntityPushable:
         RANGE = 10
@@ -7,7 +8,7 @@ if __name__ == 'classes.EntityPushable':
         def __init__(self):
             self.direction = 0
 
-        def push_forward(self, mesh, x, y):
+        def push_forward(self, mesh: Mesh, x: int, y: int) -> None:
             if self.direction == 0:
                 dx, dy = 0, -1
             elif self.direction == 1:
@@ -28,7 +29,7 @@ if __name__ == 'classes.EntityPushable':
                     )
                     mesh.set_at(x + dx * (i - 1), y + dy * (i - 1), Empty())
 
-        def push_back(self, mesh, x, y):
+        def push_back(self, mesh: Mesh, x: int, y: int) -> None:
             if self.direction == 0:
                 dx, dy = 0, -1
             elif self.direction == 1:

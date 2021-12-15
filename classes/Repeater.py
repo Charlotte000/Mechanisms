@@ -1,5 +1,6 @@
 if __name__ == 'classes.Repeater':
     import pygame
+    
     from classes.Entity import Entity
     from classes.EntityGenerator import EntityGenerator
     from classes.EntityConsumer import EntityConsumer
@@ -11,7 +12,7 @@ if __name__ == 'classes.Repeater':
             self.active = False
             self.ignore = None
             self.delay = 1
-            self.history = [None] * self.delay
+            self.history = [False] * self.delay
             super().__init__()
 
         def draw(self, screen, _, x, y, size):
@@ -67,7 +68,7 @@ if __name__ == 'classes.Repeater':
             self.delay += 25
             if self.delay > 151:
                 self.delay = 1
-            self.history = [None] * self.delay
+            self.history = [False] * self.delay
 
         @staticmethod
         def _get_color(delay):

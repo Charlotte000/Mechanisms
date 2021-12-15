@@ -5,7 +5,7 @@ if __name__ == 'classes.Entity':
         def __init__(self):
             pass
 
-        def draw(self, screen, x, y, size, color):
+        def draw(self, screen: pygame.Surface, x: int, y: int, size: int, color: tuple[int, int, int]) -> None:
             ''' Draws object on the scene '''
             pygame.draw.rect( \
                 screen, \

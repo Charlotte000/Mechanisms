@@ -1,5 +1,4 @@
 if __name__ == 'classes.Solid':
-    import pygame
     from classes.Entity import Entity
 
     class Solid(Entity):

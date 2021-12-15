@@ -1,5 +1,4 @@
-if __name__ == 'classes.RedstoneBlock':
-    import pygame
+if __name__ == 'classes.RedstoneBlock':    
     from classes.Entity import Entity
     from classes.EntityGenerator import EntityGenerator
 

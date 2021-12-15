@@ -1,11 +1,13 @@
 if __name__ == 'classes.EntityConductor':
+    from classes.Mesh import Mesh
+    
     class EntityConductor:
         CONDUCTOR_RANGE = ([-1, 0], [1, 0], [0, -1], [0, 1])
 
         def __init__(self, current):
             self.current = current
 
-        def update_conductor(self, mesh, x, y):
+        def update_conductor(self, mesh: Mesh, x: int, y: int) -> None:
             for dx, dy in EntityConductor.CONDUCTOR_RANGE:
                 if (item := mesh.get_at(x + dx, y + dy)):
                     if item.is_conductor() and item.current < self.current - .05:

@@ -1,5 +1,6 @@
 if __name__ == 'classes.Lever':
     import pygame
+    
     from classes.Entity import Entity
     from classes.EntityGenerator import EntityGenerator
     from classes.EntityClickable import EntityClickable

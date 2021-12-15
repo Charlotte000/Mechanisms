@@ -1,5 +1,6 @@
 if __name__ == 'classes.StickyPiston':
     import pygame
+    
     from classes.Entity import Entity
     from classes.EntityConsumer import EntityConsumer
     from classes.EntityPushable import EntityPushable

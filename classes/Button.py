@@ -1,7 +1,7 @@
 if __name__ == 'classes.Button':
     import pygame
+
     from classes.Entity import Entity
-    from classes.Redstone import Redstone
     from classes.EntityGenerator import EntityGenerator
     from classes.EntityClickable import EntityClickable
 
