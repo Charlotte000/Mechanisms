@@ -1,6 +1,9 @@
-import pygame
+from pygame import Surface
+from pygame.draw import rect
+from pygame.transform import rotate
 
 import classes as c
+
 
 class StickyPiston(c.Entity, c.EntityConsumer, c.EntityPushable, c.EntityClickable):
     def __init__(self):
@@ -25,7 +28,7 @@ class StickyPiston(c.Entity, c.EntityConsumer, c.EntityPushable, c.EntityClickab
         self._to_push_back = False
         self.push_forward(mesh, x, y)
 
-    def draw(self, screen: pygame.Surface, mesh: c.Mesh, x: int, y: int, size: int):
+    def draw(self, screen: Surface, mesh: c.Mesh, x: int, y: int, size: int):
         if self.active:
             if self.direction == 1 or self.direction == 2:
                 screen.blit(self.image_active, (x, y))
@@ -41,31 +44,33 @@ class StickyPiston(c.Entity, c.EntityConsumer, c.EntityPushable, c.EntityClickab
         self.image, self.image_active = StickyPiston._init_image(self.direction)
 
     @staticmethod
-    def _init_image(direction: int) -> tuple[pygame.Surface, pygame.Surface]:
-        img = pygame.Surface((c.Mesh.CELL_SIZE, c.Mesh.CELL_SIZE))
-        img2 = pygame.Surface((c.Mesh.CELL_SIZE, c.Mesh.CELL_SIZE * 2))
-        pygame.draw.rect(img, (100, 100, 100), (0, 0, c.Mesh.CELL_SIZE, c.Mesh.CELL_SIZE))
+    def _init_image(direction: int) -> tuple[Surface, Surface]:
+        img = Surface((c.Mesh.CELL_SIZE, c.Mesh.CELL_SIZE))
+        img2 = Surface((c.Mesh.CELL_SIZE, c.Mesh.CELL_SIZE * 2))
+        rect(img, (100, 100, 100), (0, 0, c.Mesh.CELL_SIZE, c.Mesh.CELL_SIZE))
 
         img2.set_colorkey((0, 0, 0))
         img2.blit(img, (0, c.Mesh.CELL_SIZE))
 
-        pygame.draw.rect( \
-            img2, \
-            (77, 56, 0), \
-            ( \
-                c.Mesh.CELL_SIZE * .4, c.Mesh.CELL_SIZE * .25, \
-                c.Mesh.CELL_SIZE * .2, c.Mesh.CELL_SIZE * .75 \
-            ) \
+        rect(
+            img2,
+            (77, 56, 0),
+            (
+                c.Mesh.CELL_SIZE * 0.4,
+                c.Mesh.CELL_SIZE * 0.25,
+                c.Mesh.CELL_SIZE * 0.2,
+                c.Mesh.CELL_SIZE * 0.75,
+            ),
         )
-        pygame.draw.rect(img, (12, 176, 72), (0, 0, c.Mesh.CELL_SIZE, c.Mesh.CELL_SIZE * .25))
-        pygame.draw.rect(img2, (12, 176, 72), (0, 0, c.Mesh.CELL_SIZE, c.Mesh.CELL_SIZE * .25))
+        rect(img, (12, 176, 72), (0, 0, c.Mesh.CELL_SIZE, c.Mesh.CELL_SIZE * 0.25))
+        rect(img2, (12, 176, 72), (0, 0, c.Mesh.CELL_SIZE, c.Mesh.CELL_SIZE * 0.25))
         if direction == 0:
             return img, img2
         if direction == 1:
-            return pygame.transform.rotate(img, -90), pygame.transform.rotate(img2, -90)
+            return rotate(img, -90), rotate(img2, -90)
         if direction == 2:
-            return pygame.transform.rotate(img, 180), pygame.transform.rotate(img2, 180)
+            return rotate(img, 180), rotate(img2, 180)
         if direction == 3:
-            return pygame.transform.rotate(img, 90), pygame.transform.rotate(img2, 90)
+            return rotate(img, 90), rotate(img2, 90)
 
         raise ValueError()

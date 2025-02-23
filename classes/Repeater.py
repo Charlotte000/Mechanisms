@@ -1,6 +1,8 @@
-import pygame
+from pygame import Surface
+from pygame.draw import line, polygon, rect
 
 import classes as c
+
 
 class Repeater(c.Entity, c.EntityGenerator, c.EntityConsumer, c.EntityClickable):
     def __init__(self):
@@ -10,26 +12,26 @@ class Repeater(c.Entity, c.EntityGenerator, c.EntityConsumer, c.EntityClickable)
         self.history = [False] * self.delay
         super().__init__()
 
-    def draw(self, screen: pygame.Surface, mesh: c.Mesh, x: int, y: int, size: int):
-        c.Entity.draw_rect(screen, x, y, size, Repeater._get_color(self.delay))
+    def draw(self, screen: Surface, mesh: c.Mesh, x: int, y: int, size: int):
+        rect(screen, Repeater._get_color(self.delay), (x, y, size, size))
 
         dx, dy = self._get_delta()
         dx = -dx
         dy = -dy
-        pygame.draw.line( \
-            screen, \
-            (200, 50, 50), \
-            (x + size / 2 + dx * size / 3, y + size / 2 + dy * size / 3), \
-            (x + size / 2 - dx * size / 3, y + size / 2 - dy * size / 3)
+        line(
+            screen,
+            (200, 50, 50),
+            (x + size / 2 + dx * size / 3, y + size / 2 + dy * size / 3),
+            (x + size / 2 - dx * size / 3, y + size / 2 - dy * size / 3),
         )
-        pygame.draw.polygon( \
-            screen, \
-            (200, 50, 50), \
-            [ \
-                (x + size / 2 - dx * size / 3, y + size / 2 - dy * size / 3), \
-                (x + size / 2 - dy * size / 3, y + size / 2 - dx * size / 3), \
-                (x + size / 2 + dy * size / 3, y + size / 2 + dx * size / 3), \
-            ] \
+        polygon(
+            screen,
+            (200, 50, 50),
+            [
+                (x + size / 2 - dx * size / 3, y + size / 2 - dy * size / 3),
+                (x + size / 2 - dy * size / 3, y + size / 2 - dx * size / 3),
+                (x + size / 2 + dy * size / 3, y + size / 2 + dx * size / 3),
+            ],
         )
 
     def before_update(self, mesh: c.Mesh, x: int, y: int):
@@ -44,15 +46,17 @@ class Repeater(c.Entity, c.EntityGenerator, c.EntityConsumer, c.EntityClickable)
         if self.history[0]:
             if (item := mesh.get_at(x + dx, y + dy)) is not None:
                 if isinstance(item, c.EntityConductor):
-                    item.current = 1
+                    item.current = 1.0
                     item.update_conductor(mesh, x + dx, y + dy)
                 elif isinstance(item, c.EntityConsumer):
                     item.update_consumer(mesh, x + dx, y + dy)
 
     def update_consumer(self, mesh: c.Mesh, x: int, y: int):
         dx, dy = self._get_delta()
-        if (item := mesh.get_at(x - dx, y - dy)):
-            if isinstance(item, c.EntityGenerator) or (isinstance(item, c.EntityConductor) and item.current > 0):
+        if item := mesh.get_at(x - dx, y - dy):
+            if isinstance(item, c.EntityGenerator) or (
+                isinstance(item, c.EntityConductor) and item.current > 0
+            ):
                 self.active = True
 
     def click(self, button: int):
@@ -63,9 +67,17 @@ class Repeater(c.Entity, c.EntityGenerator, c.EntityConsumer, c.EntityClickable)
             if self.delay > 151:
                 self.delay = 1
             self.history = [False] * self.delay
-    
+
     def _get_delta(self) -> tuple[int, int]:
-        return (0, -1) if self.direction == 0 else (1, 0) if self.direction == 1 else (0, 1) if self.direction == 2 else (-1, 0)
+        return (
+            (0, -1)
+            if self.direction == 0
+            else (
+                (1, 0)
+                if self.direction == 1
+                else (0, 1) if self.direction == 2 else (-1, 0)
+            )
+        )
 
     @staticmethod
     def _get_color(delay):

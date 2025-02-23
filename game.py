@@ -1,4 +1,5 @@
-''' Minecraft mechanism game '''
+""" Minecraft mechanism game """
+
 import pygame
 import classes as c
 from typing import Type
@@ -12,7 +13,7 @@ def draw_mesh(screen):
 
 
 pygame.init()
-font = pygame.font.SysFont('pc_cga', c.Mesh.CELL_SIZE)
+font = pygame.font.SysFont("pc_cga", c.Mesh.CELL_SIZE)
 timer = pygame.time.Clock()
 
 # Init surfaces
@@ -23,7 +24,17 @@ menu = pygame.Surface((c.Mesh.CELL_SIZE, window.get_height()))
 mesh = c.Mesh((500, 500))
 menu_mesh = c.Mesh(menu.get_size())
 
-BLOCKS: list[Type[c.Entity]] = [c.Button, c.Repeater, c.Lever, c.Piston, c.StickyPiston, c.Redstone, c.RedstoneBlock, c.Solid, c.RedstoneTorch]
+BLOCKS: list[Type[c.Entity]] = [
+    c.Button,
+    c.Repeater,
+    c.Lever,
+    c.Piston,
+    c.StickyPiston,
+    c.Redstone,
+    c.RedstoneBlock,
+    c.Solid,
+    c.RedstoneTorch,
+]
 for y, item in enumerate(BLOCKS):
     menu_mesh.set_at(0, y, item())
 
@@ -46,11 +57,13 @@ while True:
                     if (item := mesh.get_at(mouse_x, mouse_y)) is not None:
                         if isinstance(item, c.EntityClickable):
                             item.click(event.button)
-                        elif item.is_empty():
+                        elif isinstance(item, c.Empty):
                             mesh.set_at(mouse_x, mouse_y, cursor_item.copy())
             else:
                 if event.button == 1:
-                    cursor_item = (menu_mesh.get_at(0, mouse_y // c.Mesh.CELL_SIZE) or c.Empty()).copy()
+                    cursor_item = (
+                        menu_mesh.get_at(0, mouse_y // c.Mesh.CELL_SIZE) or c.Empty()
+                    ).copy()
 
     # Update screen
     window.fill((50, 50, 50))
@@ -70,13 +83,18 @@ while True:
 
     # Draw item name
     for y in range(len(menu_mesh.mesh)):
-        if (item := menu_mesh.get_at(0, y)) and not item.is_empty():
+        if (item := menu_mesh.get_at(0, y)) and not isinstance(item, c.Empty):
             mouse_x, mouse_y = pygame.mouse.get_pos()
             if mouse_x > 500:
-                text = menu_mesh.get_at(0, mouse_y // c.Mesh.CELL_SIZE).__class__.__name__
-                window.blit( \
-                    font.render(text, False, (255, 255, 255)), \
-                    (500 - font.size(text)[0], mouse_y // c.Mesh.CELL_SIZE * c.Mesh.CELL_SIZE + 2) \
+                text = menu_mesh.get_at(
+                    0, mouse_y // c.Mesh.CELL_SIZE
+                ).__class__.__name__
+                window.blit(
+                    font.render(text, False, (255, 255, 255)),
+                    (
+                        500 - font.size(text)[0],
+                        mouse_y // c.Mesh.CELL_SIZE * c.Mesh.CELL_SIZE + 2,
+                    ),
                 )
 
     # Update window
