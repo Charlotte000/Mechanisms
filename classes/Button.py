@@ -1,32 +1,27 @@
-if __name__ == 'classes.Button':
-    import pygame
+import pygame
+import classes as c
 
-    from classes.Entity import Entity
-    from classes.EntityGenerator import EntityGenerator
-    from classes.EntityClickable import EntityClickable
+class Button(c.Entity, c.EntityGenerator, c.EntityClickable):
+    DELAY = 10
 
-    class Button(Entity, EntityGenerator, EntityClickable):
-        DELAY = 10
+    def __init__(self):
+        self.cooldown = 0
 
-        def __init__(self):
-            self.cooldown = 0
-            super().__init__()
+    def update(self, mesh: c.Mesh, x: int, y: int):
+        # Signal cooldown
+        if self.cooldown > 0:
+            self.cooldown -= 1
+    
+    def update_generator(self, mesh: c.Mesh, x: int, y: int):
+        if self.cooldown > 0:
+            super().update_generator(mesh, x, y)
 
-        def update(self, *args, **kwargs):
-            # Signal cooldown
-            if self.cooldown > 0:
-                self.cooldown -= 1
-        
-        def update_generator(self, *args, **kwargs):
-            if self.cooldown > 0:
-                super().update_generator(*args, **kwargs)
+    def draw(self, screen: pygame.Surface, mesh: c.Mesh, x: int, y: int, size: int):
+        pygame.draw.rect( \
+            screen, \
+            (117, 89, 19), \
+            (x + size * .25, y + size * .25, size * .5, size * .5) \
+        )
 
-        def draw(self, screen, _, x, y, size):
-            pygame.draw.rect( \
-                screen, \
-                (117, 89, 19), \
-                (x + size * .25, y + size * .25, size * .5, size * .5) \
-            )
-
-        def click(self):
-            self.cooldown = Button.DELAY
+    def click(self, button: int):
+        self.cooldown = Button.DELAY

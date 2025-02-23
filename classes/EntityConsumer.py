@@ -1,6 +1,5 @@
-if __name__ == 'classes.EntityConsumer':
-    from classes.Mesh import Mesh
+import classes as c
 
-    class EntityConsumer:
-        def update_consumer(self, mesh: Mesh, x: int, y: int) -> None:
-            raise NotImplementedError
+class EntityConsumer:
+    def update_consumer(self, mesh: 'c.Mesh', x: int, y: int):
+        pass

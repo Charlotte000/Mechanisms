@@ -1,42 +1,31 @@
-if __name__ == 'classes.Entity':
-    import pygame
+from abc import ABC
+import pygame
 
-    class Entity:
-        def __init__(self):
-            pass
+class Entity(ABC):
+    def draw(self, screen: pygame.Surface, mesh, x: int, y: int, size: int):
+        ''' Draws object on the scene '''
+        pass
 
-        def draw(self, screen: pygame.Surface, x: int, y: int, size: int, color: tuple[int, int, int]) -> None:
-            ''' Draws object on the scene '''
-            pygame.draw.rect( \
-                screen, \
-                color, \
-                (x, y, size, size) \
-            )
+    def before_update(self, mesh, x: int, y: int):
+        pass
 
-        def before_update(self, *args, **kwargs):
-            pass
+    def update(self, mesh, x: int, y: int):
+        ''' The function is called every tick in the program '''
+        pass
 
-        def update(self, *args, **kwargs):
-            ''' The function is called every tick in the program '''
-            raise NotImplementedError
+    def after_update(self, mesh, x: int, y: int):
+        pass
 
-        def after_update(self, *args, **kwargs):
-            pass
+    def copy(self):
+        return self.__class__()
 
-        def copy(self):
-            return self.__class__()
-
-        def is_empty(self):
-            return self.__class__.__name__ == 'Empty'
-
-        def is_generator(self):
-            return 'EntityGenerator' in [cl.__name__ for cl in self.__class__.__bases__]
-
-        def is_conductor(self):
-            return 'EntityConductor' in [cl.__name__ for cl in self.__class__.__bases__]
-
-        def is_consumer(self):
-            return 'EntityConsumer' in [cl.__name__ for cl in self.__class__.__bases__]
-
-        def is_clickable(self):
-            return 'EntityClickable' in [cl.__name__ for cl in self.__class__.__bases__]
+    def is_empty(self):
+        return self.__class__.__name__ == 'Empty'
+    
+    @staticmethod
+    def draw_rect(screen: pygame.Surface, x: int, y: int, size: int, color: tuple[int, int, int]):
+        pygame.draw.rect( \
+            screen, \
+            color, \
+            (x, y, size, size) \
+        )

@@ -1,10 +1,7 @@
-if __name__ == 'classes.RedstoneBlock':    
-    from classes.Entity import Entity
-    from classes.EntityGenerator import EntityGenerator
+from pygame import Surface
 
-    class RedstoneBlock(Entity, EntityGenerator):
-        def update(self, mesh, x, y):
-            pass
+import classes as c
 
-        def draw(self, screen, _, x, y, size):
-            super().draw(screen, x, y, size, (138, 0, 0))
+class RedstoneBlock(c.Entity, c.EntityGenerator):
+    def draw(self, screen: Surface, mesh: c.Mesh, x: int, y: int, size: int):
+        c.Entity.draw_rect(screen, x, y, size, (138, 0, 0))
